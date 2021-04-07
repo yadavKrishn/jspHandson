@@ -1,0 +1,708 @@
+------Problem:1 and 2:-----
+syntax.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="http://localhost:8080/J2EEHandson/result.jsp">
+EnterString:<input type="text" name="n1"><br/>
+<input type="submit" value="OK">
+</form>
+</body>
+</html>
+
+result.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%=request.getParameter("n1") %><br/>
+<%String name=request.getParameter("n1");
+out.println(name);
+%>
+</body>
+</html>
+
+
+-----Problem:3-------
+syntax1.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%! int j=0; %>
+<%++j; %>
+<%out.println("You are visiting this page:"+j+"times"); %>
+</body>
+</html>
+
+
+-----Problem:4------
+result.jsp
+<%@page import="com.cts.PerformTask" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<% PerformTask pt=new PerformTask(); %>
+<%pt.doTask(); %>
+</body>
+</html>
+
+PerformTask.java
+package com.cts;
+
+public class PerformTask {
+	public String doTask() {
+		return "Hello World";
+	}
+}
+
+-----Problem:5-----
+page.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<% session.setAttribute("age",22); %>
+<a href="/J2EEHandson/page1.jsp">Click Here</a>
+</body>
+</html>
+
+page1.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%=session.getAttribute("age")%>
+</body>
+</html>
+
+-----problem:6-------
+page2.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" errorPage="error.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%!int i=20; %>
+<% int j=i/0; %>
+</body>
+</html>
+
+error.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" isErrorPage="true"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%= exception %><br/>
+	<%= exception.getMessage() %>
+</body>
+</html>
+
+
+-----problem:7-----
+seven.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="http://localhost:8086/J2EEHandson/Seven1.jsp">
+		Name: <input type="text" name="name"> <br/>
+		Age: <input type="text" name="age"> <br/>
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
+
+Seven1.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="com.cts.PerformTask1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%= request.getParameter("name") %><br/>
+	<%
+	    int age= Integer.parseInt(request.getParameter("age"));
+		PerformTask1 pt = new PerformTask1();
+		out.print(request.getParameter("age"));
+		out.print(" = ");
+		out.println(pt.convertLessThanOneThousand(age));
+	%>
+</body>
+</html>
+
+PerformTask1.java
+package com.cts;
+
+public class PerformTask1 {
+	private static final String[] tensNames = {
+		    "",
+		    " ten",
+		    " twenty",
+		    " thirty",
+		    " forty",
+		    " fifty",
+		    " sixty",
+		    " seventy",
+		    " eighty",
+		    " ninety"
+		  };
+
+			  private static final String[] numNames = {
+			    "",
+			    " one",
+			    " two",
+			    " three",
+			    " four",
+			    " five",
+			    " six",
+			    " seven",
+			    " eight",
+			    " nine",
+			    " ten",
+			    " eleven",
+			    " twelve",
+			    " thirteen",
+			    " fourteen",
+			    " fifteen",
+			    " sixteen",
+			    " seventeen",
+			    " eighteen",
+			    " nineteen"
+			  };
+
+		public String convertLessThanOneThousand(int number) {
+			 String soFar;
+
+			    if (number % 100 < 20){
+			      soFar = numNames[number % 100];
+			      number /= 100;
+			    }
+			    else {
+			      soFar = numNames[number % 10];
+			      number /= 10;
+
+			      soFar = tensNames[number % 10] + soFar;
+			      number /= 10;
+			    }
+			    if (number == 0) return soFar;
+			    return numNames[number] + " hundred" + soFar;
+		}
+	
+}
+
+
+-----Problem:8-----
+Eight.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<% request.setAttribute("logoURL","https://cardekho.com"); %><br/>
+	<% request.setAttribute("organizationName","CarDekho"); %><br/>
+	<jsp:include page="Eight1.jsp"></jsp:include>
+</body>
+</html>
+
+Eight1.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<%= request.getAttribute("logoURL") %>
+	<%= request.getAttribute("organizationName") %>
+</body>
+</html>
+
+----Problem:9----
+wonder.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<jsp:include page="wonder1.jsp"></jsp:include>
+
+</body>
+</html>
+
+wonder1.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%! int j=0; %>
+<%++j; %>
+<%out.println("You are visiting this page:"+j+"times"); %>
+</body>
+</html>
+
+----Problem:10---
+Ten.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="http://localhost:8080/J2EEHandson/Ten1.jsp">
+		Name: <input type="text" name="username"> <br/>
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
+Ten1.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%= request.getParameter("username") %><br/>
+</body>
+</html>
+
+----Problem:11---
+eleven.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="http://localhost:8080/J2EEHandson/Eleven1.jsp">
+		Name: <input type="text" name="username"> <br/>
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
+
+Eleven1.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<% String name = request.getParameter("username");
+	 if(name.equals("Krishna")){%>
+	<%= application.getInitParameter("Krishna") %>
+	<% } %>
+</body>
+</html>
+
+web.xml
+<context-param>
+  <param-name>Krishna</param-name>
+  <param-value>23</param-value>
+	</context-param>
+
+-------Problem:12 and 13-------
+twelveThirteen.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%=application.getInitParameter("contact") %><br/>
+<%=application.getInitParameter("email") %><br/>
+<%=config.getInitParameter("department") %></br>
+</body>
+</html>
+
+web.xml
+<servlet-name>hello</servlet-name>
+ <jsp-file>/twelveandThirteen.jsp</jsp-file>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>hello</servlet-name>
+  <url-pattern>/twelveandThirteen.jsp</url-pattern>
+  </servlet-mapping>
+  <context-param>
+  <param-name>contact</param-name>
+  <param-value>262406</param-value>
+  </context-param>
+   <context-param>
+  <param-name>email</param-name>
+  <param-value>xyz@gmail.com</param-value>
+  </context-param>
+
+
+----Problem:14-------
+index.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" errorPage="photo_error.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<% 
+ int num = 10;
+   if (num == 10)
+   {
+      throw new RuntimeException("Error Occuurred");
+   }
+ %>
+</body>
+</html>
+phot_error.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" isErrorPage="true"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<p>Exception has occurred</p>
+<%= exception %><br/>
+	<%= exception.getMessage() %>
+</body>
+</html>
+
+-----Problem:15----
+fifteen.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="http://Localhost:8080/J2EEHandson/fifteenServlet">
+UserName: <input type="text" name="name"><br/>
+<input type="submit">
+</form>
+</body>
+
+_fifteen.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%=request.getParameter("name") %>
+</body>
+</html>
+
+fifteenServlet.java
+package com.cts;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class fifteenServlet
+ */
+@WebServlet("/fifteenServlet")
+public class fifteenServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public fifteenServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter pw=response.getWriter();
+		RequestDispatcher rd=request.getRequestDispatcher("_fifteen.jsp");
+		rd.forward(request,response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+}
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+
+-----Problem:16
+EmployeeSearch.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="http://Localhost:8080/J2EEHandson/EmployeeSearch.jsp">
+Employee Id Search: <input type="text" name="empid"><br/>
+<input type="submit" >
+</form>
+</body>
+</html>
+
+--employees1 table---
+create table employees(empid int primary key,name varchar(20),age int,gender varchar(20),dept varchar(20),grade varchar(20));
+insert into  employees(empid,name,age,gender,dept,grade)
+values('1','krishna','22','male','it','A'),
+('2','yadav','23','male','se','A'),
+ ('3','rahul','24','male','se','D'),
+ ('4','ram','23','male','se','B'),
+ ('5','shyam','26','male','se','A');
+
+
+RegisterUser.jsp
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+ <%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%
+String driver = "com.mysql.jdbc.Driver";
+String connectionUrl = "jdbc:mysql://localhost:3306/";
+String database = "jdbc";
+String userid = "root";
+String password = "root";
+String Emp_id=request.getParameter("empid");
+try {
+Class.forName(driver);
+} catch (ClassNotFoundException e) {
+e.printStackTrace();
+}
+Connection connection = null;
+Statement statement = null;
+ResultSet resultSet = null;
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Search Data</h1>
+<table border="1">
+<tr>
+   	<th>Employee ID</th>
+  	 <th>Name</th>
+   	<th>Age</th>
+ 	<th>Gender</th>
+ 	 <th>Dept</th>
+ 	  <th>Grade</th>
+</tr>
+<%
+try{
+connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbc","root","root");
+statement=connection.createStatement();
+String sql ="select * from employees1 where empid="+Emp_id+"";
+resultSet = statement.executeQuery(sql);
+while(resultSet.next()){
+%>
+<tr>
+<td><%=resultSet.getString("empid") %></td>
+<td><%=resultSet.getString("name") %></td>
+<td><%=resultSet.getString("age") %></td>
+<td><%=resultSet.getString("gender") %></td>
+<td><%=resultSet.getString("dept") %></td>
+<td><%=resultSet.getString("grade") %></td>
+</tr>
+<%
+}
+connection.close();
+} catch (Exception e) {
+e.printStackTrace();
+}
+%>
+</table>
+</body>
+</html>
+
+-----Problem:17---------
+Employee1.java
+package com.cts;
+
+import java.io.Serializable;
+
+public class Employee1 implements Serializable {
+	private int code;
+	private String name;
+	private float salary;
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public float getSalary() {
+		return salary;
+	}
+	public void setSalary(float salary) {
+		this.salary = salary;
+	}
+	
+	
+	
+}
+
+
+Seventeen.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="http://localhost:8080/J2EEHandson/Seventeen1.jsp">
+Code:<input type="text" name="code"><br/>
+Name:<input type="text" name="name"><br/>
+Salary:<input type="text" name="salary"><br/>
+<input type="submit">
+</form>
+</body>
+</html>
+
+Seventeen1.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<jsp:useBean id="id" class="com.cts.Employee1">
+      <jsp:setProperty name="id" property="code"/>
+      <jsp:setProperty name="id" property="name"/>
+      <jsp:setProperty name="id" property="salary"/> 
+</jsp:useBean>
+<br/>
+Employee code<%=id.getCode()%>
+Employee name<%=id.getName()%> 
+Employee salary<%=id.getSalary()%>
+</body>
+</html>
+
+______________________________________________________________________
+______________________________________________________________________
